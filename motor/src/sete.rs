@@ -67,9 +67,10 @@ pub(crate) fn extrair(
     cancelar: &AtomicBool,
 ) -> Result<(), Erro> {
     let mut c = comando()?;
-    // -p sempre presente: sem senha, o 7-Zip responde "Wrong password" em vez de esperar o teclado
+    // -p sempre presente: sem senha, o 7-Zip responde "Wrong password" em vez de esperar o teclado.
+    // "-p" vazio não basta no Windows (lá ele tenta perguntar), por isso uma senha qualquer.
     c.arg("x").arg("-y").arg("-bso0").arg("-bsp1").arg("-bse2");
-    c.arg(format!("-p{}", senha.unwrap_or("")));
+    c.arg(format!("-p{}", senha.filter(|s| !s.is_empty()).unwrap_or("descompacta-sem-senha")));
     c.arg(format!("-o{}", destino.display()));
     c.arg("--").arg(arquivo);
     rodar(c, progresso, cancelar).map_err(|e| match e {
