@@ -1,0 +1,15 @@
+[package]
+name = "motor"
+description = "Motor do app: toda a lógica fica aqui, separada da interface"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+anyhow = "1.0"
+hound = "3.5"
+serde = { version = "1.0", features = ["derive"] }
+
+[[bin]]
+name = "motor-cli"
+path = "src/bin/motor-cli.rs"

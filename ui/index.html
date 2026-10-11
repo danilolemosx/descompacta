@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Modelo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topo">
+    <div class="marca">MODELO<span>.</span></div>
+    <div class="subtitulo">descreva o app<br>em duas linhas</div>
+    <span class="espaco"></span>
+  </header>
+
+  <main class="corpo">
+    <section class="bilhete">
+      <div id="vazio" class="vazio">
+        <b>ARRASTE SEUS WAVS</b>
+        <span>para a fila ao lado, ou</span>
+        <button id="adicionarVazio" class="botao-tinta">+ ADICIONAR WAVS…</button>
+      </div>
+      <div id="detalhe" class="miolo oculto">
+        <div class="cabecalho">
+          <div class="campo nome"><span class="rot">Arquivo</span><b id="dNome"></b></div>
+          <div class="campo"><span class="rot">Taxa</span><b id="dTaxa" class="tab"></b></div>
+          <div class="campo"><span class="rot">Canais</span><b id="dCanais" class="tab"></b></div>
+          <div class="campo"><span class="rot">Duração</span><b id="dDuracao" class="tab"></b></div>
+        </div>
+        <div class="grande"><span class="rot">Pico</span><b id="dPico" class="tab"></b></div>
+        <div id="dAvisos" class="avisos"></div>
+      </div>
+    </section>
+
+    <section class="coluna">
+      <h3>FILA <span id="contagem">00</span></h3>
+      <div id="lista" class="lista"></div>
+      <button id="soltar" class="soltar"><b>+ WAVS</b>arraste aqui ou clique</button>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <span class="espaco"></span>
+    <button id="acao" class="principal" disabled>PROCESSAR<small id="resumo">NADA NA FILA</small></button>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
