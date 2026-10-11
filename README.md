@@ -1,28 +1,23 @@
-# Modelo de app desktop (Mac e Windows)
+# Descompacta
 
-Ponto de partida para os apps do Danilo, com o que funcionou no **Decanta**:
+Descompactador e compactador gratuito para Mac (Apple Silicon e Intel) e Windows, da suíte do Danilo.
 
-- **Tauri v2**: um app leve para Mac (Apple Silicon e Intel) e Windows, com a lógica em Rust.
-- **`motor/`**: a lógica do app, testável sozinha, com uma linha de comando (`motor-cli`).
-- **`app/`**: a janela, que liga a interface ao motor.
-- **`ui/`**: a interface em HTML/CSS/JS, no estilo "bilhete" (papel, tinta e vermelho, fonte Archivo).
-- **GitHub Actions**: testes a cada envio e instaladores ao publicar uma Release.
-- **Sem assinatura paga**: Mac com assinatura ad-hoc e Windows com instalador comum. Os avisos de segurança e
-  como contorná-los estão em `docs/LEIA-ME-modelo.txt`.
+- **Arraste e solte**: compactados (zip, rar, 7z, tar.gz, iso…) são abertos; arquivos e pastas comuns viram um zip.
+  Vários arquivos soltos juntos viram **um zip só**, com o nome da pasta onde estão.
+- **Fila de bilhetes**: cada arquivo com a sua porcentagem; senha pedida quando o arquivo tiver uma.
+- **Sem bagunça**: um arquivo com um único item dentro não cria pasta a mais; nada é sobrescrito ("Nome 2").
+- **Zip limpo**: sem `.DS_Store`/`__MACOSX` e com nomes em UTF-8 (acentos chegam certos no Windows).
+- **Botão direito**: "Abrir com" e Ações Rápidas no Finder; "Descompactar aqui"/"Compactar em ZIP" no Windows.
 
-O exemplo que vem pronto lê WAVs arrastados para a janela e mostra taxa, canais, duração, pico e clip.
-
-## Começar um app novo
-
-1. No GitHub, clique em **Use this template → Create a new repository**.
-2. Abra uma sessão do Claude Code no repositório novo e descreva o app. O `CLAUDE.md` explica o jeito de
-   trabalhar, e `docs/processo.md` traz o passo a passo e as lições do Decanta.
+Por baixo, o trabalho pesado é do **7-Zip** oficial (versão fixa em `scripts/baixar-7zip.sh`, conferida por
+SHA-256), embutido no app. Os previews aprovados da interface estão em `previews/`.
 
 ## Desenvolvimento
 
 ```bash
+scripts/baixar-7zip.sh                                # baixa o 7-Zip para app/binaries (uma vez)
 cargo test -p motor                                   # testes do motor
-cargo run --release -p motor --bin motor-cli -- a.wav # motor pela linha de comando
+cargo run --release -p motor --bin motor-cli -- X.rar # o mesmo que soltar na janela
 cargo tauri dev                                       # (em app/) abre o app
 ```
 
@@ -38,5 +33,7 @@ No Linux, o app precisa de `libwebkit2gtk-4.1-dev libgtk-3-dev librsvg2-dev`.
    `..._aarch64.dmg` (Mac M1–M4), `..._x64.dmg` (Mac Intel) e `..._x64-setup.exe` (Windows).
 
 ## Licenças
-- Este modelo: MIT OR Apache-2.0.
+- Descompacta: MIT OR Apache-2.0.
+- 7-Zip (Igor Pavlov): GNU LGPL, com a restrição do unRAR (o código pode abrir RAR, mas não pode ser usado para
+  recriar o compactador RAR). A licença vai junto no app (`7zip-License.txt`). Site: https://www.7-zip.org
 - Fonte Archivo (Omnibus-Type): SIL Open Font License 1.1, veja `ui/fonts/OFL.txt`.

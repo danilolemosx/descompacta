@@ -43,8 +43,10 @@ jobs:
       - uses: Swatinem/rust-cache@v2
         with:
           key: ${{ matrix.alvo }}
-      # Se o app precisar de um programa externo embutido (como o bmx no Decanta), compile-o aqui
-      # para app/binaries/<nome>-<alvo> e declare "externalBin" no tauri.conf.json.
+      # O 7-Zip oficial vai embutido no app (externalBin em tauri.conf.json)
+      - name: Baixar o 7-Zip
+        shell: bash
+        run: scripts/baixar-7zip.sh ${{ matrix.alvo }}
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -58,7 +60,7 @@ jobs:
           tauriScript: tauri
           args: ${{ matrix.args }}
           tagName: ${{ github.event.release.tag_name }}
-          releaseName: "Modelo ${{ github.event.release.tag_name }}"
+          releaseName: "Descompacta ${{ github.event.release.tag_name }}"
           releaseDraft: false
           prerelease: false
       - name: Guardar instaladores como artefato (execução manual)

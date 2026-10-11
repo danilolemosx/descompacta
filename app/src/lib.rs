@@ -2,36 +2,17 @@
 
 use std::path::PathBuf;
 
-use serde::Serialize;
-
-#[derive(Serialize)]
-#[serde(rename_all = "camelCase")]
-struct Item {
-    caminho: String,
-    inspecao: Option<motor::Inspecao>,
-    erro: Option<String>,
-}
-
-/// Arquivos passados na linha de comando (por exemplo, "Abrir com…").
+/// Arquivos passados na linha de comando (por exemplo, o menu do botão direito no Windows).
 #[tauri::command]
 fn arquivos_iniciais() -> Vec<String> {
-    std::env::args().skip(1).filter(|a| a.to_lowercase().ends_with(".wav")).collect()
+    std::env::args().skip(1).filter(|a| !a.starts_with('-')).collect()
 }
 
-/// Inspeciona os arquivos (em outra thread, para não travar a janela).
+/// O que fazer com o que foi solto na janela.
 #[tauri::command]
-async fn inspecionar(caminhos: Vec<String>) -> Vec<Item> {
-    tauri::async_runtime::spawn_blocking(move || {
-        caminhos
-            .into_iter()
-            .map(|c| match motor::inspecionar(&PathBuf::from(&c)) {
-                Ok(i) => Item { caminho: c, inspecao: Some(i), erro: None },
-                Err(e) => Item { caminho: c, inspecao: None, erro: Some(format!("{e:#}")) },
-            })
-            .collect()
-    })
-    .await
-    .unwrap_or_default()
+fn planejar(caminhos: Vec<String>, um_zip_so: bool, formato: motor::Formato) -> Vec<motor::Tarefa> {
+    let caminhos: Vec<PathBuf> = caminhos.into_iter().map(PathBuf::from).collect();
+    motor::planejar(&caminhos, um_zip_so, formato)
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -39,7 +20,7 @@ pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![arquivos_iniciais, inspecionar])
+        .invoke_handler(tauri::generate_handler![arquivos_iniciais, planejar])
         .run(tauri::generate_context!())
         .expect("erro ao iniciar o aplicativo");
 }

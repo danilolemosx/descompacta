@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
+<style>
+:root{--papel:#efe5cf;--papel2:#e4d7ba;--tinta:#34312d;--fundo:#2e2d2b;--verm:#d2382f;--apagado:#8a8172}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#1f1e1d;font-family:Archivo,sans-serif;color:var(--tinta);padding:40px;width:1780px}
+.linha{display:flex;gap:40px;align-items:flex-start}
+.W{font-stretch:125%;text-transform:uppercase}
+.rot{font-stretch:125%;font-weight:800;color:var(--papel);font-size:20px;letter-spacing:.04em;margin-bottom:6px}
+.sub{color:#a59c8c;font-size:14px;margin-bottom:16px;min-height:20px}
+.janela{width:540px;background:var(--fundo);border-radius:12px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.5);height:800px;position:relative}
+.barra{height:30px;display:flex;align-items:center;gap:7px;padding:0 12px}
+.barra i{width:12px;height:12px;border-radius:50%;background:#55524d;display:block}
+.cab{display:flex;justify-content:space-between;align-items:center;padding:10px 24px 16px;color:var(--papel)}
+.cab h1{font-size:30px;font-weight:900}
+.x{width:30px;height:30px;border-radius:50%;background:var(--verm);color:var(--papel);display:grid;place-items:center;font-size:16px;font-weight:900}
+.bloco{margin:0 24px 12px;background:var(--papel);border-radius:5px;overflow:hidden}
+.bloco .tit{padding:9px 14px;font-size:12px;font-weight:800;letter-spacing:.1em;border-bottom:2px dashed #b9ab8d;display:flex;justify-content:space-between}
+.bloco .tit span{color:var(--apagado)}
+.lin{display:flex;justify-content:space-between;align-items:center;padding:9px 14px;font-size:14px;font-weight:600;gap:12px}
+.lin+.lin{border-top:1px solid var(--papel2)}
+.lin small{display:block;font-size:11px;color:var(--apagado);font-weight:500;margin-top:2px}
+.seg{display:flex;border:2px solid var(--tinta);border-radius:4px;overflow:hidden;flex-shrink:0}
+.seg b{padding:5px 10px;font-size:11px;font-weight:800;letter-spacing:.06em;font-stretch:125%}
+.seg b+b{border-left:2px solid var(--tinta)}
+.seg b.on{background:var(--tinta);color:var(--papel)}
+.tg{width:42px;height:24px;border-radius:12px;background:#c9bc9f;position:relative;flex-shrink:0}
+.tg:after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--papel)}
+.tg.on{background:var(--verm)}.tg.on:after{left:21px}
+.campo{border:2px solid var(--tinta);border-radius:4px;padding:5px 10px;font-size:13px;width:150px;color:var(--apagado);background:#f7f0e0}
+.base{position:absolute;bottom:0;left:0;right:0;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;color:#a59c8c;font-size:11px;letter-spacing:.08em;font-weight:700;border-top:1px solid #45423e}
+.btn{background:var(--verm);color:var(--papel);padding:9px 14px;border-radius:4px;font-size:12px;font-weight:800;letter-spacing:.08em}
+
+/* Finder */
+.finder{width:1160px;height:800px;border-radius:12px;overflow:hidden;background:#1e1e1e;position:relative;box-shadow:0 20px 50px rgba(0,0,0,.5);font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;color:#e8e8e8}
+.ftop{height:52px;background:#2a2a2a;border-bottom:1px solid #111;display:flex;align-items:center;padding:0 16px;gap:8px}
+.ftop i{width:12px;height:12px;border-radius:50%;display:block}
+.ftop .t{margin-left:90px;font-size:14px;font-weight:600}
+.lado{position:absolute;top:52px;bottom:0;left:0;width:180px;background:#262626;padding:16px 14px;font-size:13px;color:#bbb;line-height:2}
+.lado b{font-size:11px;color:#777;display:block;margin-top:6px}
+.icones{position:absolute;left:210px;top:80px;display:flex;gap:40px}
+.ic{width:96px;text-align:center;font-size:12px}
+.ic .f{width:64px;height:76px;margin:0 auto 6px;border-radius:4px;background:#d8d8d8;position:relative}
+.ic .f.z{background:linear-gradient(#e7e0cc,#cfc6ad)}
+.ic .f.z:after{content:"";position:absolute;left:28px;top:0;width:8px;height:46px;background:repeating-linear-gradient(#555 0 4px,#bbb 4px 8px)}
+.ic .f.p{background:#4a90d9;border-radius:6px;height:56px;margin-top:20px}
+.ic.sel .f{outline:3px solid #3a7bd5;outline-offset:3px}
+.ic.sel span{background:#2f62c4;border-radius:4px;padding:1px 5px;color:#fff}
+.menu{position:absolute;background:rgba(48,48,48,.97);border:1px solid #555;border-radius:9px;padding:5px;font-size:13.5px;box-shadow:0 12px 30px rgba(0,0,0,.6);width:250px}
+.menu div{padding:3px 10px;border-radius:4px;display:flex;justify-content:space-between;white-space:nowrap}
+.menu hr{border:0;border-top:1px solid #4d4d4d;margin:5px 8px}
+.menu .h{background:#2f62c4;color:#fff}
+.menu .dim{color:#888}
+.menu .novo{position:relative}
+.menu .novo:before{content:"";position:absolute;left:-14px;top:50%;width:6px;height:6px;margin-top:-3px;border-radius:50%;background:var(--verm)}
+.dots{display:flex;gap:7px;padding:5px 10px}
+.dots i{width:12px;height:12px;border-radius:50%;display:block}
+.leg{position:absolute;font-family:Archivo,sans-serif;color:var(--papel);font-size:13px;font-weight:800;letter-spacing:.06em;font-stretch:125%;text-transform:uppercase;background:var(--verm);padding:5px 9px;border-radius:4px}
+.legt{position:absolute;color:#cfc6b4;font-family:Archivo,sans-serif;font-size:13px;width:240px;line-height:1.4}
+</style></head><body>
+<div class="linha">
+
+<div>
+  <div class="rot W">Engrenagem aberta</div>
+  <div class="sub">Os ajustes ocupam o lugar da fila. O ✕ volta para a fila.</div>
+  <div class="janela"><div class="barra"><i></i><i></i><i></i></div>
+    <div class="cab"><h1 class="W">Ajustes</h1><div class="x">✕</div></div>
+
+    <div class="bloco"><div class="tit W">Ao descompactar</div>
+      <div class="lin"><div>Onde salvar</div><div class="seg"><b class="on">Mesma pasta</b><b>Perguntar</b></div></div>
+      <div class="lin"><div>Abrir a pasta no fim</div><div class="tg on"></div></div>
+      <div class="lin"><div>Mandar o compactado para o Lixo<small>Só depois de abrir tudo sem erro</small></div><div class="tg"></div></div>
+    </div>
+
+    <div class="bloco"><div class="tit W">Ao compactar</div>
+      <div class="lin"><div>Vários arquivos → um zip só<small>Nome: a pasta onde eles estão (ex.: Entrega_Final.zip)</small></div><div class="tg on"></div></div>
+      <div class="lin"><div>Formato<small>ZIP abre em qualquer computador · 7Z fica menor</small></div><div class="seg"><b class="on">ZIP</b><b>7Z</b></div></div>
+      <div class="lin"><div>Nível</div><div class="seg"><b>Rápido</b><b class="on">Normal</b><b>Máximo</b></div></div>
+      <div class="lin"><div>Senha<small>Vazio = sem senha</small></div><div class="campo">••••••</div></div>
+      <div class="lin"><div>Dividir em partes</div><div class="seg"><b class="on">Não</b><b>2 GB</b><b>4 GB</b></div></div>
+    </div>
+
+    <div class="bloco"><div class="tit W">Botão direito <span>Mac</span></div>
+      <div class="lin"><div>Ações Rápidas no Finder<small>"Descompactar aqui" e "Compactar em ZIP"</small></div><div class="tg on"></div></div>
+      <div class="lin"><div>Abrir compactados com clique duplo<small>Torna o Descompacta o app padrão</small></div><div class="tg on"></div></div>
+    </div>
+
+    <div class="base W"><span>Descompacta v1.0 · grátis</span><span>Zip limpo para Windows</span></div>
+  </div>
+</div>
+
+<div>
+  <div class="rot W">Botão direito no Finder</div>
+  <div class="sub">Dois cliques possíveis no mesmo menu (aqui os dois submenus aparecem abertos só para mostrar).</div>
+  <div class="finder">
+    <div class="ftop"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="t">Downloads</span></div>
+    <div class="lado"><b>Favoritos</b>Recentes<br>Aplicativos<br>Mesa<br>Documentos<br>Downloads<b>Locais</b>INSIDE_10TB</div>
+    <div class="icones">
+      <div class="ic sel"><div class="f z"></div><span>SFX_Chuva_Pack.rar</span></div>
+      <div class="ic"><div class="f z"></div><span>Ep18_Audio.7z</span></div>
+      <div class="ic"><div class="f p"></div><span>Entrega_Final</span></div>
+    </div>
+
+    <div class="menu" style="left:300px;top:175px">
+      <div>Abrir</div>
+      <div class="h">Abrir com <span>›</span></div>
+      <hr>
+      <div>Mover para o Lixo</div>
+      <hr>
+      <div>Obter Informações</div><div>Renomear</div><div>Comprimir "SFX_Chuva_Pack.rar"</div><div>Duplicar</div><div>Criar Atalho</div><div>Visualização Rápida</div>
+      <hr>
+      <div>Copiar</div><div>Compartilhar…</div>
+      <hr>
+      <div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#f5d33f"></i><i style="background:#28c840"></i><i style="background:#3a7bd5"></i><i style="background:#a970d6"></i><i style="background:#999"></i></div>
+      <div class="dim">Etiquetas…</div>
+      <hr>
+      <div class="h">Ações Rápidas <span>›</span></div>
+    </div>
+
+    <div class="menu" style="left:556px;top:191px;width:250px">
+      <div class="h novo">Descompacta (padrão)</div>
+      <div>The Unarchiver</div>
+      <div>Utilitário de Compactação</div>
+      <hr><div>App Store…</div><div>Outro…</div>
+    </div>
+
+    <div class="menu" style="left:556px;top:540px;width:250px">
+      <div class="h novo">Descompactar aqui</div>
+      <div class="novo">Compactar em ZIP</div>
+      <hr><div>Personalizar…</div>
+    </div>
+
+    <div class="leg" style="left:830px;top:193px">1 · Abrir com</div>
+    <div class="legt" style="left:830px;top:225px">Abre o Descompacta com o arquivo já na fila. Sendo o padrão, o clique duplo faz o mesmo.</div>
+    <div class="leg" style="left:830px;top:542px">2 · Ações Rápidas</div>
+    <div class="legt" style="left:830px;top:574px">"Descompactar aqui" abre na mesma pasta. Em pastas e arquivos comuns aparece "Compactar em ZIP".</div>
+  </div>
+</div>
+
+</div>
+</body></html>

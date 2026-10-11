@@ -1,12 +1,12 @@
 [package]
-name = "modelo"
-description = "Modelo de app desktop (Tauri v2) para Mac e Windows"
+name = "descompacta"
+description = "Descompacta: janela do app (Tauri v2)"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
 
 [lib]
-name = "modelo_lib"
+name = "descompacta_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]

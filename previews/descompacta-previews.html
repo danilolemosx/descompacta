@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--papel:#efe5cf;--papel2:#e4d7ba;--tinta:#34312d;--fundo:#2e2d2b;--verm:#d2382f;--apagado:#8a8172}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#1f1e1d;font-family:Archivo,sans-serif;color:var(--tinta);padding:40px;width:1780px}
+.linha{display:flex;gap:40px;align-items:flex-start}
+.op{width:540px}
+.rot{font-stretch:125%;font-weight:800;color:var(--papel);font-size:20px;letter-spacing:.04em;margin-bottom:6px}
+.sub{color:#a59c8c;font-size:14px;margin-bottom:16px;min-height:38px}
+.janela{background:var(--fundo);border-radius:12px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.5);height:640px;position:relative}
+.barra{height:30px;display:flex;align-items:center;gap:7px;padding:0 12px}
+.barra i{width:12px;height:12px;border-radius:50%;background:#55524d;display:block}
+.W{font-stretch:125%;text-transform:uppercase}
+.mono{font-family:'IBM Plex Mono',monospace}
+.eng{width:30px;height:30px;border-radius:50%;border:2px solid currentColor;display:grid;place-items:center;font-size:17px}
+
+/* A — INGRESSO */
+.ing{margin:14px 22px;background:var(--papel);border-radius:6px;height:568px;display:flex;flex-direction:column;position:relative}
+.ing .topo{padding:22px 24px 14px;display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid var(--tinta)}
+.ing h1{font-size:34px;font-weight:900;line-height:1}
+.ing .num{font-size:12px;color:var(--apagado);margin-top:6px;letter-spacing:.08em}
+.solte{margin:18px 24px;border:2px dashed var(--tinta);border-radius:4px;height:150px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+.solte b{font-size:26px;font-weight:900}
+.solte span{font-size:13px;color:#5d574f}
+.picote{position:relative;border-top:2px dashed #b9ab8d;margin:0}
+.picote:before,.picote:after{content:"";position:absolute;top:-13px;width:24px;height:24px;border-radius:50%;background:var(--fundo)}
+.picote:before{left:-12px}.picote:after{right:-12px}
+.canhoto{padding:16px 24px;flex:1;display:flex;flex-direction:column;gap:12px}
+.item{display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:end}
+.item .nome{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.item .pct{font-size:22px;font-weight:900;grid-row:span 2}
+.item .verbo{font-size:11px;letter-spacing:.1em;font-weight:700;color:var(--apagado)}
+.trilho{grid-column:1/-1;height:6px;background:var(--papel2);border-radius:3px;overflow:hidden}
+.trilho div{height:100%;background:var(--tinta)}
+.vermelho{color:var(--verm)!important}
+.trilho .v{background:var(--verm)}
+.rodape{display:flex;justify-content:space-between;align-items:center;padding:12px 24px;border-top:2px solid var(--tinta);font-size:12px;letter-spacing:.08em;font-weight:700}
+.btn{background:var(--tinta);color:var(--papel);padding:9px 14px;border-radius:4px;font-size:12px;font-weight:800;letter-spacing:.08em}
+.btn.r{background:var(--verm)}
+
+/* B — FILA */
+.fila .cab{display:flex;justify-content:space-between;align-items:center;padding:10px 24px 18px;color:var(--papel)}
+.fila h1{font-size:30px;font-weight:900}
+.fila .solteB{margin:0 24px 18px;height:96px;border-radius:6px;border:2px dashed #6e6a62;display:flex;align-items:center;justify-content:center;gap:14px;color:var(--papel)}
+.fila .solteB b{font-size:20px;font-weight:900}
+.fila .solteB span{font-size:12px;color:#a59c8c}
+.cartao{margin:0 24px 10px;background:var(--papel);border-radius:5px;display:flex;align-items:stretch;overflow:hidden}
+.cartao .esq{flex:1;padding:12px 14px;min-width:0}
+.cartao .nome{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cartao .det{font-size:11px;color:var(--apagado);margin-top:3px;letter-spacing:.06em;font-weight:600}
+.cartao .dir{width:96px;display:grid;place-items:center;border-left:2px dashed #b9ab8d;font-size:26px;font-weight:900}
+.cartao .trilho{margin-top:9px}
+.fila .base{position:absolute;bottom:0;left:0;right:0;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;color:var(--papel);font-size:12px;letter-spacing:.08em;font-weight:700;border-top:1px solid #45423e}
+
+/* C — MÍNIMO */
+.min{margin:14px 22px;background:var(--papel);border-radius:6px;height:568px;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative}
+.min .eng{position:absolute;top:18px;right:18px}
+.min h1{font-size:22px;font-weight:900;margin-top:26px;letter-spacing:.02em}
+.min .estado{margin-top:58px;font-size:13px;font-weight:800;letter-spacing:.14em;color:var(--verm)}
+.min .grande{font-size:150px;font-weight:900;line-height:1;margin-top:6px;letter-spacing:-.02em}
+.min .grande small{font-size:60px}
+.min .arq{font-size:15px;font-weight:600;margin-top:8px}
+.min .trilho{width:400px;margin-top:22px;height:8px}
+.min .resto{margin-top:12px;font-size:12px;color:var(--apagado);letter-spacing:.08em;font-weight:700}
+.min .pe{position:absolute;bottom:0;left:0;right:0;border-top:2px solid var(--tinta);padding:16px 24px;display:flex;justify-content:space-between;align-items:center;font-size:12px;letter-spacing:.08em;font-weight:700}
+.min .dica{position:absolute;bottom:72px;font-size:13px;color:#5d574f}
+.nota{color:#a59c8c;font-size:13px;margin-top:14px;line-height:1.45}
+</style></head><body>
+<div class="linha">
+
+<!-- A -->
+<div class="op">
+  <div class="rot W">A · Ingresso</div>
+  <div class="sub">Área de soltar em cima, fila no "canhoto" picotado. Tudo à vista.</div>
+  <div class="janela"><div class="barra"><i></i><i></i><i></i></div>
+    <div class="ing">
+      <div class="topo"><div><h1 class="W">Descompacta</h1><div class="num W">Nº 0042 · Admite qualquer arquivo</div></div><div class="eng">⚙</div></div>
+      <div class="solte"><b class="W">Solte aqui</b><span>Compactado → abre &nbsp;·&nbsp; Arquivo ou pasta → vira ZIP</span></div>
+      <div class="picote"></div>
+      <div class="canhoto">
+        <div class="item"><div class="nome">SFX_Chuva_Pack.rar</div><div class="pct">100%</div><div class="verbo W">Descompactado · 1,2 GB</div><div class="trilho"><div style="width:100%"></div></div></div>
+        <div class="item"><div class="nome">Ep18_Cena01_Audio.7z</div><div class="pct vermelho">64%</div><div class="verbo W vermelho">Descompactando · faltam 40 s</div><div class="trilho"><div class="v" style="width:64%"></div></div></div>
+        <div class="item"><div class="nome">Entrega_Final (pasta)</div><div class="pct" style="color:var(--apagado)">—</div><div class="verbo W">Na fila · vai virar ZIP</div><div class="trilho"><div style="width:0"></div></div></div>
+      </div>
+      <div class="rodape W"><span>2 de 3 · 1,9 GB</span><span class="btn">Abrir pasta</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- B -->
+<div class="op">
+  <div class="rot W">B · Fila de bilhetes</div>
+  <div class="sub">Janela escura; cada arquivo é um bilhete creme com o número grande no canhoto.</div>
+  <div class="janela fila"><div class="barra"><i></i><i></i><i></i></div>
+    <div class="cab"><h1 class="W">Descompacta</h1><div class="eng">⚙</div></div>
+    <div class="solteB"><b class="W">Solte aqui</b><span>abre .zip .rar .7z .tar .iso…&nbsp; · &nbsp;compacta o resto em ZIP</span></div>
+    <div class="cartao"><div class="esq"><div class="nome">SFX_Chuva_Pack.rar</div><div class="det W">Pronto · 1,2 GB · 214 arquivos</div><div class="trilho"><div style="width:100%"></div></div></div><div class="dir">✓</div></div>
+    <div class="cartao"><div class="esq"><div class="nome">Ep18_Cena01_Audio.7z</div><div class="det W vermelho">Descompactando · faltam 40 s</div><div class="trilho"><div class="v" style="width:64%"></div></div></div><div class="dir vermelho">64</div></div>
+    <div class="cartao"><div class="esq"><div class="nome">Entrega_Final</div><div class="det W">Na fila · vai virar ZIP</div><div class="trilho"><div style="width:0"></div></div></div><div class="dir" style="color:var(--apagado)">—</div></div>
+    <div class="cartao"><div class="esq"><div class="nome">Projeto_Avid_Backup.zip</div><div class="det W">Na fila · senha pedida ao chegar</div><div class="trilho"><div style="width:0"></div></div></div><div class="dir" style="color:var(--apagado)">—</div></div>
+    <div class="base W"><span>2 de 4 · 1,9 GB</span><span class="btn r">Abrir pasta</span></div>
+  </div>
+</div>
+
+<!-- C -->
+<div class="op">
+  <div class="rot W">C · Um número só</div>
+  <div class="sub">Mínimo: um arquivo por vez, porcentagem gigante. A fila aparece só como contador.</div>
+  <div class="janela"><div class="barra"><i></i><i></i><i></i></div>
+    <div class="min">
+      <div class="eng">⚙</div>
+      <h1 class="W">Descompacta</h1>
+      <div class="estado W">Descompactando 2 de 3</div>
+      <div class="grande W">64<small>%</small></div>
+      <div class="arq">Ep18_Cena01_Audio.7z</div>
+      <div class="trilho"><div class="v" style="width:64%"></div></div>
+      <div class="resto W">Faltam 40 s · depois: Entrega_Final → ZIP</div>
+      <div class="dica">Solte mais arquivos em qualquer lugar da janela</div>
+      <div class="pe W"><span>Cancelar</span><span class="btn">Abrir pasta</span></div>
+    </div>
+  </div>
+</div>
+
+</div>
+</body></html>

@@ -22,6 +22,9 @@ jobs:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
+      - name: Baixar o 7-Zip
+        shell: bash
+        run: scripts/baixar-7zip.sh
       - name: Testes do motor
         run: cargo test --release -p motor
 
@@ -34,5 +37,7 @@ jobs:
       - uses: Swatinem/rust-cache@v2
       - name: Dependências do Tauri no Linux
         run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-dev libgtk-3-dev librsvg2-dev libayatana-appindicator3-dev
+      - name: Baixar o 7-Zip
+        run: scripts/baixar-7zip.sh
       - name: Compilar o app
-        run: cargo build -p modelo
+        run: cargo build -p descompacta

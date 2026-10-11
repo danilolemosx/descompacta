@@ -1,14 +1,15 @@
 [package]
 name = "motor"
-description = "Motor do app: toda a lógica fica aqui, separada da interface"
+description = "Motor do Descompacta: decide o que abrir e o que compactar, e conversa com o 7-Zip"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
 
 [dependencies]
-anyhow = "1.0"
-hound = "3.5"
 serde = { version = "1.0", features = ["derive"] }
+
+[dev-dependencies]
+serde_json = "1.0"
 
 [[bin]]
 name = "motor-cli"
