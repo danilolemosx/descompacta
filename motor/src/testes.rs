@@ -159,6 +159,16 @@ fn nomes_livres() {
 }
 
 #[test]
+fn conta_arquivos_e_bytes() {
+    let t = Tmp::novo();
+    t.escrever("P/a", b"123");
+    t.escrever("P/sub/b", b"45");
+    assert_eq!(contar(&t.p("P")), (2, 5));
+    assert_eq!(contar(&t.p("P/a")), (1, 3));
+    assert_eq!(contar(&t.p("nada")), (0, 0));
+}
+
+#[test]
 fn opcoes_vindas_da_interface() {
     let o: Opcoes = serde_json::from_str(r#"{"formato":"7z","nivel":"maximo","senha":"x","partesMb":2048,"umZipSo":true}"#).unwrap();
     assert_eq!((o.formato, o.nivel, o.partes_mb, o.um_zip_so), (Formato::SeteZ, Nivel::Maximo, Some(2048), true));

@@ -13,7 +13,7 @@
       {
         "title": "Descompacta",
         "width": 560,
-        "height": 720,
+        "height": 780,
         "minWidth": 460,
         "minHeight": 560,
         "dragDropEnabled": true
@@ -28,7 +28,6 @@
     "targets": [
       "app",
       "dmg",
-      "msi",
       "nsis"
     ],
     "category": "Utility",
@@ -51,7 +50,8 @@
       "nsis": {
         "languages": [
           "PortugueseBR"
-        ]
+        ],
+        "installerHooks": "windows/hooks.nsh"
       }
     },
     "externalBin": [
@@ -59,6 +59,129 @@
     ],
     "resources": {
       "binaries/7zip-License.txt": "7zip-License.txt"
-    }
+    },
+    "fileAssociations": [
+      {
+        "ext": [
+          "zip",
+          "zipx"
+        ],
+        "name": "Arquivo ZIP",
+        "description": "Arquivo ZIP",
+        "role": "Viewer",
+        "rank": "Default",
+        "contentTypes": [
+          "public.zip-archive"
+        ]
+      },
+      {
+        "ext": [
+          "rar"
+        ],
+        "name": "Arquivo RAR",
+        "description": "Arquivo RAR",
+        "role": "Viewer",
+        "rank": "Default",
+        "contentTypes": [
+          "com.rarlab.rar-archive"
+        ],
+        "exportedType": {
+          "identifier": "com.rarlab.rar-archive",
+          "conformsTo": [
+            "public.data",
+            "public.archive"
+          ]
+        }
+      },
+      {
+        "ext": [
+          "7z"
+        ],
+        "name": "Arquivo 7-Zip",
+        "description": "Arquivo 7-Zip",
+        "role": "Viewer",
+        "rank": "Default",
+        "contentTypes": [
+          "org.7-zip.7-zip-archive"
+        ],
+        "exportedType": {
+          "identifier": "org.7-zip.7-zip-archive",
+          "conformsTo": [
+            "public.data",
+            "public.archive"
+          ]
+        }
+      },
+      {
+        "ext": [
+          "tar"
+        ],
+        "name": "Arquivo TAR",
+        "description": "Arquivo TAR",
+        "role": "Viewer",
+        "rank": "Default",
+        "contentTypes": [
+          "public.tar-archive"
+        ]
+      },
+      {
+        "ext": [
+          "gz",
+          "tgz"
+        ],
+        "name": "Arquivo GZIP",
+        "description": "Arquivo GZIP",
+        "role": "Viewer",
+        "rank": "Default",
+        "contentTypes": [
+          "org.gnu.gnu-zip-archive",
+          "org.gnu.gnu-zip-tar-archive"
+        ]
+      },
+      {
+        "ext": [
+          "bz2",
+          "tbz",
+          "tbz2"
+        ],
+        "name": "Arquivo BZIP2",
+        "description": "Arquivo BZIP2",
+        "role": "Viewer",
+        "rank": "Default",
+        "contentTypes": [
+          "public.bzip2-archive"
+        ]
+      },
+      {
+        "ext": [
+          "xz",
+          "txz"
+        ],
+        "name": "Arquivo XZ",
+        "description": "Arquivo XZ",
+        "role": "Viewer",
+        "rank": "Default",
+        "contentTypes": [
+          "org.tukaani.xz-archive"
+        ]
+      },
+      {
+        "ext": [
+          "zst",
+          "lz",
+          "lzma",
+          "cab",
+          "arj",
+          "lzh",
+          "cpio",
+          "001",
+          "iso"
+        ],
+        "name": "Arquivo compactado",
+        "description": "Arquivo compactado",
+        "role": "Viewer",
+        "rank": "Default"
+      }
+    ]
   }
 }

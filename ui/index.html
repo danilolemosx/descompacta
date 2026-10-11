@@ -7,42 +7,72 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="topo">
-    <div class="marca">DESCOMPACTA<span>.</span></div>
-    <div class="subtitulo">descreva o app<br>em duas linhas</div>
-    <span class="espaco"></span>
-  </header>
+  <!-- FILA -->
+  <section id="telaFila" class="tela">
+    <header class="cab">
+      <h1 class="W">Descompacta</h1>
+      <button id="abrirAjustes" class="eng" title="Ajustes">⚙</button>
+    </header>
 
-  <main class="corpo">
-    <section class="bilhete">
-      <div id="vazio" class="vazio">
-        <b>ARRASTE SEUS WAVS</b>
-        <span>para a fila ao lado, ou</span>
-        <button id="adicionarVazio" class="botao-tinta">+ ADICIONAR WAVS…</button>
+    <button id="solte" class="solte">
+      <b class="W">Solte aqui</b>
+      <span>abre .zip .rar .7z .tar .iso… &nbsp;·&nbsp; compacta o resto em <em id="fmtDica">ZIP</em></span>
+    </button>
+
+    <div id="lista" class="lista"></div>
+    <div id="vazio" class="vazio">
+      Compactados são abertos na mesma pasta.<br>
+      Arquivos e pastas comuns viram <em id="fmtDica2">ZIP</em>.<br>
+      <small>Também pelo botão direito no Finder.</small>
+    </div>
+
+    <footer class="base W">
+      <span id="resumo"></span>
+      <span class="botoes">
+        <button id="limpar" class="link W" hidden>Limpar</button>
+        <button id="abrirPasta" class="btn r W" disabled>Abrir pasta</button>
+      </span>
+    </footer>
+  </section>
+
+  <!-- AJUSTES -->
+  <section id="telaAjustes" class="tela" hidden>
+    <header class="cab">
+      <h1 class="W">Ajustes</h1>
+      <button id="fecharAjustes" class="x" title="Voltar (Esc)">✕</button>
+    </header>
+
+    <div class="rolagem">
+      <div class="bloco"><div class="tit W">Ao descompactar</div>
+        <div class="lin"><div>Onde salvar</div>
+          <div class="seg" data-cfg="onde"><button data-v="mesma">Mesma pasta</button><button data-v="perguntar">Perguntar</button></div></div>
+        <div class="lin"><div>Abrir a pasta no fim</div><button class="tg" data-cfg="abrirPasta"></button></div>
+        <div class="lin"><div>Mandar o compactado para o Lixo<small>Só depois de abrir tudo sem erro</small></div><button class="tg" data-cfg="lixo"></button></div>
       </div>
-      <div id="detalhe" class="miolo oculto">
-        <div class="cabecalho">
-          <div class="campo nome"><span class="rot">Arquivo</span><b id="dNome"></b></div>
-          <div class="campo"><span class="rot">Taxa</span><b id="dTaxa" class="tab"></b></div>
-          <div class="campo"><span class="rot">Canais</span><b id="dCanais" class="tab"></b></div>
-          <div class="campo"><span class="rot">Duração</span><b id="dDuracao" class="tab"></b></div>
-        </div>
-        <div class="grande"><span class="rot">Pico</span><b id="dPico" class="tab"></b></div>
-        <div id="dAvisos" class="avisos"></div>
+
+      <div class="bloco"><div class="tit W">Ao compactar</div>
+        <div class="lin"><div>Vários arquivos → um zip só<small>Nome: a pasta onde eles estão (ex.: Entrega_Final.zip)</small></div><button class="tg" data-cfg="umZipSo"></button></div>
+        <div class="lin"><div>Formato<small>ZIP abre em qualquer computador · 7Z fica menor</small></div>
+          <div class="seg" data-cfg="formato"><button data-v="zip">ZIP</button><button data-v="7z">7Z</button></div></div>
+        <div class="lin"><div>Nível</div>
+          <div class="seg" data-cfg="nivel"><button data-v="rapido">Rápido</button><button data-v="normal">Normal</button><button data-v="maximo">Máximo</button></div></div>
+        <div class="lin"><div>Senha<small id="senhaDica">Vazio = sem senha · vale até fechar o app</small></div>
+          <input id="senhaCompactar" class="campo" type="password" placeholder="sem senha" autocomplete="off"></div>
+        <div class="lin"><div>Dividir em partes</div>
+          <div class="seg" data-cfg="partes"><button data-v="0">Não</button><button data-v="2048">2 GB</button><button data-v="4096">4 GB</button></div></div>
       </div>
-    </section>
 
-    <section class="coluna">
-      <h3>FILA <span id="contagem">00</span></h3>
-      <div id="lista" class="lista"></div>
-      <button id="soltar" class="soltar"><b>+ WAVS</b>arraste aqui ou clique</button>
-    </section>
-  </main>
+      <div id="blocoMac" class="bloco" hidden><div class="tit W">Botão direito <span>Mac</span></div>
+        <div class="lin"><div>Ações Rápidas no Finder<small>"Descompactar aqui" e "Compactar em ZIP"</small></div><button class="tg" id="tgAcoes"></button></div>
+        <div class="lin"><div>Abrir compactados com clique duplo<small>Torna o Descompacta o app padrão</small></div><button class="tg" id="tgPadrao"></button></div>
+      </div>
+    </div>
 
-  <footer class="rodape">
-    <span class="espaco"></span>
-    <button id="acao" class="principal" disabled>PROCESSAR<small id="resumo">NADA NA FILA</small></button>
-  </footer>
+    <footer class="base W">
+      <span>Descompacta <span id="versao"></span> · grátis</span>
+      <span>Zip limpo para Windows</span>
+    </footer>
+  </section>
 
   <script src="app.js"></script>
 </body>

@@ -272,5 +272,21 @@ fn criados(destino: &Path) -> Vec<PathBuf> {
         .collect()
 }
 
+/// Quantos arquivos e quantos bytes há num caminho (arquivo ou pasta, sem seguir atalhos).
+pub fn contar(p: &Path) -> (u64, u64) {
+    let Ok(m) = std::fs::symlink_metadata(p) else { return (0, 0) };
+    if !m.is_dir() {
+        return (1, m.len());
+    }
+    let mut total = (0, 0);
+    if let Ok(ls) = std::fs::read_dir(p) {
+        for e in ls.flatten() {
+            let (a, b) = contar(&e.path());
+            total = (total.0 + a, total.1 + b);
+        }
+    }
+    total
+}
+
 #[cfg(test)]
 mod testes;
