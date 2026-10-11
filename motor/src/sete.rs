@@ -69,7 +69,7 @@ pub(crate) fn extrair(
     let mut c = comando()?;
     // -p sempre presente: sem senha, o 7-Zip responde "Wrong password" em vez de esperar o teclado.
     // "-p" vazio não basta no Windows (lá ele tenta perguntar), por isso uma senha qualquer.
-    c.arg("x").arg("-y").arg("-bso0").arg("-bsp1").arg("-bse2");
+    c.arg("x").arg("-sccUTF-8").arg("-y").arg("-bso0").arg("-bsp1").arg("-bse2");
     c.arg(format!("-p{}", senha.filter(|s| !s.is_empty()).unwrap_or("descompacta-sem-senha")));
     c.arg(format!("-o{}", destino.display()));
     c.arg("--").arg(arquivo);
@@ -92,7 +92,7 @@ pub(crate) fn compactar(
         return Err(Erro::Falhou("no ZIP, a senha não pode ter acento nem ç (tire os acentos ou use 7Z)".into()));
     }
     let mut c = comando()?;
-    c.arg("a").arg("-bso0").arg("-bsp1").arg("-bse2").arg("-ssw");
+    c.arg("a").arg("-sccUTF-8").arg("-bso0").arg("-bsp1").arg("-bse2").arg("-ssw");
     c.arg(match o.formato {
         Formato::Zip => "-tzip",
         Formato::SeteZ => "-t7z",
@@ -163,9 +163,10 @@ fn rodar(mut c: Command, progresso: &mut dyn FnMut(u8), cancelar: &AtomicBool) -
         }
     });
     let leitor_erros = std::thread::spawn(move || {
-        let mut s = String::new();
-        let _ = erros.read_to_string(&mut s);
-        s
+        // tolerante: no Windows a mensagem pode vir noutra codificação, e uma letra estranha não pode apagá-la
+        let mut b = Vec::new();
+        let _ = erros.read_to_end(&mut b);
+        String::from_utf8_lossy(&b).into_owned()
     });
     let mut ultimo = 0u8;
     let status = loop {
